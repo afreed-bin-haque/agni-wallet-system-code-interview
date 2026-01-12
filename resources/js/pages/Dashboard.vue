@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import DefaultLayout from '@/Layouts/DefaultLayout.vue';
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 </script>
 
 <template>
-    <DefaultLayout title="Dashboard ~ Agni .::.Afreed Bin Haque">
+    <DashboardLayout title="Dashboard ~ Agni .::.Afreed Bin Haque">
         <h1 class="text-2xl font-bold">Dashboard</h1>
-    </DefaultLayout>
+    </DashboardLayout>
 </template>

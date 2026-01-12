@@ -17,9 +17,9 @@ defineProps<{
                 </div>
 
                 <div class="space-x-4">
-                    <Link href="/dashboard">dashboard</Link>
-                    <Link href="/login">Login</Link>
-                    <Link href="/register">Register</Link>
+                    <Link href="/dashboard">Dashboard</Link>
+                    <Link href="/wallet">Wallet</Link>
+                    <Link href="/login">Logout</Link>
                 </div>
             </div>
         </nav>
