@@ -28,11 +28,11 @@ function toggleSidebar() {
         <nav class="mt-8 flex flex-col space-y-4">
             <Link href="/add-balance" class="flex items-center gap-2 hover:text-green-700">
                 <CreditCard class="h-5 w-5" />
-                Add Balance
+                {{ __('AddBalance') }}
             </Link>
             <Link href="/history" class="flex items-center gap-2 hover:text-green-700">
                 <Clock class="h-5 w-5" />
-                History
+                {{ __('History') }}
             </Link>
         </nav>
     </aside>

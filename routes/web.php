@@ -6,6 +6,7 @@ use App\Http\Controllers\userDashController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [appManager::class, "index"])->name('home');
+Route::post('/language', [appManager::class, "changeLang"])->name('languageswitch');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [userDashController::class, "dashboard"])->name('dashboard');
     Route::get('/history', [userDashController::class, "userTrxHistory"])->name('history');

@@ -10,11 +10,20 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob<DefineComponent>('./pages/**/*.vue')),
+
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .mount(el);
+        const vueApp = createApp({ render: () => h(App, props) });
+
+        vueApp.use(plugin);
+
+        vueApp.config.globalProperties.__ = (key: string): string => {
+            const translations = props.initialPage.props.translations as Record<string, string> | undefined;
+            return translations?.[key] ?? key;
+        };
+
+        vueApp.mount(el);
     },
+
     progress: {
         color: '#ffff',
     },

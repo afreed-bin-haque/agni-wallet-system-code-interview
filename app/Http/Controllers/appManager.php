@@ -20,4 +20,11 @@ class appManager extends Controller
     {
         return Inertia::render("Register");
     }
+    public function changeLang(Request $request)
+    {
+        if (in_array($request->lang, ['en', 'bn'])) {
+            session(['locale' => $request->lang]);
+        }
+        return response()->json(['status' => true]);
+    }
 }

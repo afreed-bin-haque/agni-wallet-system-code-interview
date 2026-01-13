@@ -1,45 +1,72 @@
 <script setup lang="ts">
-import { Inertia } from '@inertiajs/inertia';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import axios from 'axios';
+import { Languages } from 'lucide-vue-next';
 import { useToast } from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 
-axios.defaults.withCredentials = true;
-
 const toast = useToast();
+const page = usePage();
+const currentLocale = (page.props.locale as string) ?? 'en';
 
 const handleLogout = async () => {
     try {
         const res = await axios.get('/logout', {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-            },
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            withCredentials: true,
         });
-
         if (res?.data?.status) {
             toast.success(res.data.msg || 'Logged out successfully!');
-            axios.defaults.headers.common['X-CSRF-TOKEN'] = res.data.csrf_token;
-            Inertia.visit(res.data.redirect);
+            window.location.reload();
         } else {
             toast.error('Logout failed');
         }
-    } catch (err) {
+    } catch {
         toast.error('Logout failed');
+    }
+};
+
+const switchLanguage = async (lang: string) => {
+    try {
+        await axios.post(
+            '/language',
+            { lang },
+            {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                },
+                withCredentials: true,
+            },
+        );
+        window.location.reload();
+    } catch {
+        toast.error('Language switch failed');
     }
 };
 </script>
 
 <template>
     <nav class="bg-[#04a96d] text-white">
-        <div class="mx-auto flex max-w-7xl justify-between px-6 py-4">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
             <div class="text-lg font-bold">
-                <Link href="/">Agni wallet</Link>
+                <Link href="/">{{ __('AgniWallet') }}</Link>
             </div>
 
-            <div class="space-x-4">
-                <Link href="/wallet" class="cursor-pointer">Wallet</Link>
-                <button @click="handleLogout" class="cursor-pointer">Logout</button>
+            <div class="flex items-center space-x-2">
+                <button
+                    v-if="currentLocale === 'en'"
+                    @click="switchLanguage('bn')"
+                    class="flex cursor-pointer items-center gap-1 rounded bg-white px-3 py-1 text-black hover:bg-gray-100"
+                >
+                    <Languages /> BN
+                </button>
+
+                <button v-else @click="switchLanguage('en')" class="flex items-center gap-1 rounded bg-white px-3 py-1 text-black hover:bg-gray-100">
+                    <Languages /> EN
+                </button>
+
+                <button @click="handleLogout" class="cursor-pointer">{{ __('Logout') }}</button>
             </div>
         </div>
     </nav>
