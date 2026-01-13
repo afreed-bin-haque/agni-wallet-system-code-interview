@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DefaultNav from '@components/DefaultNav.vue';
+import DefaultNav from '@/components/DefaultNav.vue';
 import { Head } from '@inertiajs/vue3';
 
 defineProps<{
