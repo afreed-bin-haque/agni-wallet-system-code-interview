@@ -49,7 +49,7 @@ const submit = async () => {
 
 <template>
     <DefaultLayout title="Login here">
-        <div class="flex min-h-screen items-center justify-center bg-gray-100 px-4">
+        <div class="flex min-h-screen items-center justify-center px-4">
             <div class="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
                 <h1 class="mb-2 text-center text-2xl font-semibold text-gray-900">Login to your account</h1>
                 <p class="mb-6 text-center text-sm text-gray-500">Enter your credentials to login</p>
