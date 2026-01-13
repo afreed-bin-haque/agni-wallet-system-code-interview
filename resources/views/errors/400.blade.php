@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bad Request</title>
+</head>
+
+<body>
+    <h1>400 - Bad Request</h1>
+    <p>{{ $message ?? 'Invalid request' }}</p>
+</body>
+
+</html>

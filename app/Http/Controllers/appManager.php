@@ -9,13 +9,9 @@ class appManager extends Controller
 {
     public function index()
     {
-        return Inertia::render('Welcome');
+        return redirect()->route('dashboard');
     }
 
-    public function dashboard()
-    {
-        return Inertia::render("Dashboard");
-    }
     public function login()
     {
         return Inertia::render("Login");

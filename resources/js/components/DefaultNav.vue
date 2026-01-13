@@ -9,9 +9,8 @@ import { Link } from '@inertiajs/vue3';
             </div>
 
             <div class="space-x-4">
-                <Link href="/dashboard">dashboard</Link>
-                <Link href="/login">Login</Link>
-                <Link href="/register">Register</Link>
+                <Link href="/login" class="cursor-pointer">Login</Link>
+                <Link href="/register" class="cursor-pointer">Register</Link>
             </div>
         </div>
     </nav>
