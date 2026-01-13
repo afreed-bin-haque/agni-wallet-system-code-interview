@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import DashNav from '@components/DashNav.vue';
-import DashSidebar from '@components/DashSidebar.vue';
-import DashSidebarMobile from '@components/DashSidebarMobile.vue';
+import DashNav from '@/components/DashNav.vue';
+import DashSidebar from '@/components/DashSidebar.vue';
+import DashSidebarMobile from '@/components/DashSidebarMobile.vue';
 import { Head } from '@inertiajs/vue3';
 
 defineProps<{ title?: string }>();
