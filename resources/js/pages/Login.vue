@@ -51,8 +51,8 @@ const submit = async () => {
     <DefaultLayout title="Login here">
         <div class="flex min-h-screen items-center justify-center px-4">
             <div class="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
-                <h1 class="mb-2 text-center text-2xl font-semibold text-gray-900">Login to your account</h1>
-                <p class="mb-6 text-center text-sm text-gray-500">Enter your credentials to login</p>
+                <h1 class="mb-2 text-center text-2xl font-semibold text-gray-900">{{ __('Logintoyouraccount') }}</h1>
+                <p class="mb-6 text-center text-sm text-gray-500">{{ __('LoginHelper') }}</p>
 
                 <form class="space-y-5" @submit.prevent="submit">
                     <div>
@@ -92,8 +92,8 @@ const submit = async () => {
                 </form>
 
                 <p class="mt-4 text-center text-sm text-gray-600">
-                    Don’t have an account?
-                    <Link href="/register" class="font-medium text-black hover:underline"> Register here</Link>
+                    {{ __('RegisterPromntOne') }}
+                    <Link href="/register" class="font-medium text-black hover:underline">{{ __('RegisterPromntTwo') }}</Link>
                 </p>
             </div>
         </div>

@@ -3,5 +3,15 @@
     "Wallet": "Wallet",
     "AddBalance": "Add Balance",
     "History": "History",
-    "Logout": "Logout"
+    "Login": "Login",
+    "Register": "Register",
+    "Logout": "Logout",
+    "Logintoyouraccount": "Login to your account",
+    "LoginHelper": "Enter your credentials to login",
+    "RegisterPromntOne": "Don’t have an account ?",
+    "RegisterPromntTwo": "Register here",
+    "RegisterYourAccount": "Register your account",
+    "RegisterHelper": "Enter your credentials to create your account",
+    "LoginPromptOne": "Already have an Account?",
+    "LoginPromptTwo": "Login here"
 }

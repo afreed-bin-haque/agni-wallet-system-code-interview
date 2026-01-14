@@ -30,7 +30,6 @@ const switchLanguage = async (lang: string) => {
     try {
         await axios.get('/language', {
             params: { lang },
-            headers: { 'X-Requested-With': 'XMLHttpRequest' },
             withCredentials: true,
         });
         window.location.reload();

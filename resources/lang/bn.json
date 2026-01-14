@@ -1,7 +1,17 @@
 {
-    "AgniWallet": "Agni ওয়ালেট",
+    "AgniWallet": "Agni Wallet",
     "Wallet": "ওয়ালেট",
     "AddBalance": "ব্যালেন্স যোগ করুন",
-    "History": "ইতিহাস",
-    "Logout": "বাহির"
+    "History": "হিস্টরি",
+    "Login": "লগ ইন",
+    "Register": "রেজিস্টার",
+    "Logout": "লগ আউট",
+    "Logintoyouraccount": "আপনার একাউন্টে লগ ইন করুন",
+    "LoginHelper": "আপনার একাউন্ট ক্রিডেনশিয়াল দিয়ে লগ ইন করুন",
+    "RegisterPromntOne": "একাউন্ট নেই ?",
+    "RegisterPromntTwo": "এখানে রেজিস্টার করুন",
+    "RegisterYourAccount": "আপনার একাউন্ট রেজিস্টার করুন",
+    "RegisterHelper": "আপনার ক্রিডেনশিয়াল দিয়ে এখানে রেজিস্টার করুন",
+    "LoginPromptOne": "একাউন্ট আছে?",
+    "LoginPromptTwo": "এখানে লগ ইন করুন"
 }
