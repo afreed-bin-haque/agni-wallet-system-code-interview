@@ -8,6 +8,6 @@ const name = props?.user.name || 'Guest';
 
 <template>
     <DashboardLayout title="Dashboard ~ Agni .::.Afreed Bin Haque">
-        <h1 class="text-2xl font-bold">Hi {{ name }}</h1>
+        <h1 class="text-2xl font-bold">{{ __('Greetings') }} {{ name }}</h1>
     </DashboardLayout>
 </template>

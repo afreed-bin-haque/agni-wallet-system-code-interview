@@ -13,5 +13,6 @@
     "RegisterYourAccount": "আপনার একাউন্ট রেজিস্টার করুন",
     "RegisterHelper": "আপনার ক্রিডেনশিয়াল দিয়ে এখানে রেজিস্টার করুন",
     "LoginPromptOne": "একাউন্ট আছে?",
-    "LoginPromptTwo": "এখানে লগ ইন করুন"
+    "LoginPromptTwo": "এখানে লগ ইন করুন",
+    "Greetings": "স্বাগতম"
 }

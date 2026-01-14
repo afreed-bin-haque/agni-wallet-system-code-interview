@@ -13,5 +13,6 @@
     "RegisterYourAccount": "Register your account",
     "RegisterHelper": "Enter your credentials to create your account",
     "LoginPromptOne": "Already have an Account?",
-    "LoginPromptTwo": "Login here"
+    "LoginPromptTwo": "Login here",
+    "Greetings": "Greetings"
 }
