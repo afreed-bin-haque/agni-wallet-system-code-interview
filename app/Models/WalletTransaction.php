@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class WalletTransaction extends Model
 {
@@ -10,6 +11,7 @@ class WalletTransaction extends Model
         'wallet_id',
         'type',
         'amount',
+        'phone',
         'payment_id',
         'trx_id',
         'bkash_res',
@@ -17,6 +19,17 @@ class WalletTransaction extends Model
 
     ];
     protected $primaryKey = 'wallet_trx_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected static function booted()
+    {
+        static::creating(function ($walletTrx) {
+            if (!$walletTrx->wallet_trx_id) {
+                $walletTrx->wallet_trx_id = (string) Str::uuid();
+            }
+        });
+    }
     protected $casts = [
         'amount' => 'decimal:2',
     ];

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
 
@@ -23,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
         Inertia::share([
             'locale' => fn() => app()->getLocale(),
         ]);
+        User::observe(UserObserver::class);
     }
 }

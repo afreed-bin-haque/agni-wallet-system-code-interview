@@ -15,8 +15,9 @@ return new class extends Migration
             $table->string('wallet_trx_id')->primary();
             $table->string('wallet_id');
             $table->foreign('wallet_id')->references('wallet_id')->on('wallets')->onDelete('cascade');
-            $table->enum('type', ['pending', 'success', 'failed', 'cancelled'])->default('pending');
+            $table->enum('type', ['credit', 'refund'])->default('credit');
             $table->decimal('amount', 14, 2)->default(0);
+            $table->string('phone')->nullable();
             $table->string('payment_id')->nullable();
             $table->string('trx_id')->nullable();
             $table->longText('bkash_res')->nullable();

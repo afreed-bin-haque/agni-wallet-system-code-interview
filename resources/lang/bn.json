@@ -14,5 +14,9 @@
     "RegisterHelper": "আপনার ক্রিডেনশিয়াল দিয়ে এখানে রেজিস্টার করুন",
     "LoginPromptOne": "একাউন্ট আছে?",
     "LoginPromptTwo": "এখানে লগ ইন করুন",
-    "Greetings": "স্বাগতম"
+    "Greetings": "স্বাগতম",
+    "Balance": "ব্যালেন্স",
+    "balaneAdd": "ব্যালেন্স যোগ করুন",
+    "phonNumberHolder": "আপনার বিকাশ ফোন নাম্বার লিখুন",
+    "addAmount": "টাকার পরিমাণ লিখুন"
 }

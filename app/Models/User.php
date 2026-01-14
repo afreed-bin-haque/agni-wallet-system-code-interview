@@ -29,4 +29,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function walletTrx()
+    {
+        return $this->hasOne(Wallet::class, 'id', 'user_id');
+    }
 }

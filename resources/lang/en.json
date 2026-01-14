@@ -14,5 +14,9 @@
     "RegisterHelper": "Enter your credentials to create your account",
     "LoginPromptOne": "Already have an Account?",
     "LoginPromptTwo": "Login here",
-    "Greetings": "Greetings"
+    "Greetings": "Greetings",
+    "Balance": "Balance",
+    "balaneAdd": "Add Balance",
+    "phonNumberHolder": "Write your Bkash phone number",
+    "addAmount": "Write an amount you want to add to wallet"
 }

@@ -10,6 +10,8 @@ Route::get('/language', [appManager::class, "changeLang"])->name('languageswitch
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [userDashController::class, "dashboard"])->name('dashboard');
     Route::get('/history', [userDashController::class, "userTrxHistory"])->name('history');
+    Route::get('/add-balance', [userDashController::class, "addBalance"])->name('addbalance');
+    Route::post('/request-to-add-balance', [userDashController::class, "requstAddBalance"])->name('reqaddbalance');
     Route::get('/logout', [userAuthController::class, "userLogout"])->name('userlogout');
 });
 
