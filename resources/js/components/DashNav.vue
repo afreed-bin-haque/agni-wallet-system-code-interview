@@ -28,17 +28,11 @@ const handleLogout = async () => {
 
 const switchLanguage = async (lang: string) => {
     try {
-        await axios.post(
-            '/language',
-            { lang },
-            {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
-                },
-                withCredentials: true,
-            },
-        );
+        await axios.get('/language', {
+            params: { lang },
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            withCredentials: true,
+        });
         window.location.reload();
     } catch {
         toast.error('Language switch failed');
