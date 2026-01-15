@@ -36,6 +36,10 @@
 
     <h1>Invoice #TEST-001</h1>
     <p>Date: {{ now()->format('Y-m-d') }}</p>
+    <p>Name: {{ $name }}</p>
+    <p>Amount: ${{ $amount }}</p>
+    <p>Date: {{ $date }}</p>
+
 
     <table>
         <thead>
