@@ -24,6 +24,6 @@ class WalletService
         $wallet->balance += $amount;
         $wallet->save();
 
-        return $wallet->balance;
+        return $wallet;
     }
 }

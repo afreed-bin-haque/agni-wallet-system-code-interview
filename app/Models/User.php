@@ -34,4 +34,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Wallet::class, 'id', 'user_id');
     }
+    public function trxChannel()
+    {
+        return $this->hasMany(TrxChannel::class, 'id', 'user_id');
+    }
 }

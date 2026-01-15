@@ -23,3 +23,4 @@ Route::middleware(['checkSessingExist'])->group(function () {
     Route::post('/register-user', [userAuthController::class, 'registerUser'])->name("reguser");
     Route::post('/login-user', [userAuthController::class, 'loginUser'])->name("loginuser");
 });
+Route::get('/bkash', [userDashController::class, 'ExecutePayment'])->name('reroute.mfsp_bkash');
