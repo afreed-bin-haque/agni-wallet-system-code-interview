@@ -9,6 +9,11 @@ To run the project :
 ```
 composer install
 php artisan migrate
+php artisan route:clear
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan optimize:clear
 composer run dev
 ```
 

@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\appManager;
+use App\Http\Controllers\pdfTestController;
 use App\Http\Controllers\userAuthController;
 use App\Http\Controllers\userDashController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [appManager::class, "index"])->name('home');
+Route::get('/test-pdf', [pdfTestController::class, "testPdf"])->name('testpdf');
 Route::get('/language', [appManager::class, "changeLang"])->name('languageswitch');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [userDashController::class, "dashboard"])->name('dashboard');
