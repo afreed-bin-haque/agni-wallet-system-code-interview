@@ -46,7 +46,7 @@ class pdfTestController extends Controller
                 : null;
 
 
-            $html = view('pdf.testinvoice', [
+            $html = view('pdf.statementinvoice', [
                 'trx' => $data
             ])->render();
 
