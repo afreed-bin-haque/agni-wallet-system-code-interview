@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\WalletService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\Validator;
 
 class userAuthController extends Controller
 {
+    protected $walletService;
+    public function __construct(WalletService $walletService)
+    {
+
+        $this->walletService = $walletService;
+    }
     public function registerUser(Request $request)
     {
         try {
@@ -28,11 +35,14 @@ class userAuthController extends Controller
             }
             $hashedPass = Hash::make($request->password);
 
-            User::create([
+            $user = User::create([
                 "name" => $request->name,
                 "email" => $request->email,
                 "password" => $hashedPass,
             ]);
+            $userId = $user->id;
+            $amount = 0;
+            $wallet = $this->walletService->addBalance($amount, $userId);
             return response()->json([
                 "status" => true,
                 "msg" => "User registered"
