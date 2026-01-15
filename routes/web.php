@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [appManager::class, "index"])->name('home');
 Route::get('/test-pdf', [pdfTestController::class, "testPdf"])->name('testpdf');
+Route::get('/statement-pdf/{wallet_trx_id}', [pdfTestController::class, "printStatement"])->name('printstatement');
 Route::get('/language', [appManager::class, "changeLang"])->name('languageswitch');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [userDashController::class, "dashboard"])->name('dashboard');
@@ -18,6 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/request-to-add-balance', [userDashController::class, "requstAddBalance"])->name('reqaddbalance');
     Route::get('/debit-balance', [userDashController::class, "dbitBalance"])->name('debitbalance');
     Route::post('/request-to-debit-balance', [userDashController::class, "requstDebitBalance"])->name('reqdebitbalance');
+    Route::get('/request-to-refund-balance/{bkash_trx}/{payment_id}', [userDashController::class, 'getRefund']);
     Route::get('/logout', [userAuthController::class, "userLogout"])->name('userlogout');
 });
 

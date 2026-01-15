@@ -164,7 +164,6 @@ class userDashController extends Controller
             $validator = Validator::make($request->all(), [
                 'phone' => 'required',
                 'amount' => 'required|int',
-                'password' => 'required|min:6',
             ]);
             if ($validator->fails()) {
                 return response()->json([
@@ -388,6 +387,67 @@ class userDashController extends Controller
             Log::error($errorDetails);
             abort(400, 'Request could not process.Please check log');
         }
+    }
+
+    public function getRefund($bkash_trx, $payment_id)
+    {
+        $userId = Auth::id();
+        $id_key = "bkash_id_key";
+        $refresh_key = "bkash_refresh_key";
+        if (Redis::exists($id_key) && Redis::exists($refresh_key)) {
+            $id_token = json_decode(Redis::get($id_key), true);
+            $refresh_token = json_decode(Redis::get($refresh_key), true);
+            Log::info('Successfully hit Redis and got id and refresh key');
+        } elseif (Redis::exists($refresh_key)) {
+            $get_refresh_token = json_decode(Redis::get($refresh_key), true);
+            $json_decoded_get_token = $this->GetIdByRefreshToken($get_refresh_token);
+            $id_token = $json_decoded_get_token['id_token'];
+            $refresh_token = $get_refresh_token;
+            Redis::setex($id_key, 3600, json_encode($id_token));
+            Log::info('Successfully hit Redis and got refresh key then sent it to GetIdByRefreshToken');
+        } else {
+            $json_decoded_get_token = $this->GetIdAndRefreshToken();
+            $id_token = $json_decoded_get_token['id_token'];
+            $refresh_token = $json_decoded_get_token['refresh_token'];
+            Redis::setex($id_key, 3600, json_encode($id_token));
+            Redis::setex($refresh_key, 2332800, json_encode($refresh_token));
+            Log::info('Successfully hit GetIdAndRefreshToken');
+        }
+        $trx = TrxChannel::where('payment_id', $payment_id)
+            ->where('trx_id', $bkash_trx)
+            ->first();
+
+        $amount = $trx?->amount;
+
+        $post_payment_id = collect()->push([
+            'paymentID' => $payment_id,
+            'trxID' => $bkash_trx,
+            'amount' => (int)$amount,
+            'reason' => 'test payer',
+            'sku' => 'test'
+        ])->flatMap(function ($values) {
+            return  $values;
+        })->all();
+        $get_payment_id = Http::withHeaders([
+            'accept' => 'application/json',
+            'content-type' => 'application/json',
+            'X-APP-Key' => $this->app_key,
+            'Authorization' => $id_token,
+        ])->post($this->base_url . 'checkout/payment/refund', $post_payment_id);
+        TrxChannel::create([
+            'user_id' => $userId,
+            'amount' => $amount,
+            'payment_id' => $payment_id,
+            'bkash_res' => json_encode($get_payment_id),
+        ]);
+        $wallet = $this->walletService->addBalance(-$amount, $userId);
+        WalletTransaction::create([
+            'wallet_id' => $wallet->wallet_id,
+            'type' => 'refund',
+            'amount' => (int) $amount,
+            'status' => 'success',
+        ]);
+        return Redirect::to(config('system.appConfig.redirect_frontend_url') . '/dashboard?success=Successfully refunded');
     }
 
     private function GetIdAndRefreshToken()

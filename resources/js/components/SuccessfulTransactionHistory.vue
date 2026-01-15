@@ -66,6 +66,7 @@ fetchTransactions();
                         <th class="px-4 py-2 text-left">Sl.</th>
                         <th class="px-4 py-2 text-left">Phone</th>
                         <th class="px-4 py-2 text-left">Amount</th>
+                        <th class="px-4 py-2 text-left">type</th>
                         <th class="px-4 py-2 text-left">Payment ID</th>
                         <th class="px-4 py-2 text-left">TRX ID</th>
                         <th class="px-4 py-2 text-left">Status</th>
@@ -90,11 +91,37 @@ fetchTransactions();
                         <td class="px-4 py-2">{{ index + 1 + (pagination.current_page - 1) * pagination.per_page }}</td>
                         <td class="px-4 py-2">{{ trx.phone }}</td>
                         <td class="px-4 py-2">{{ trx.amount }}</td>
+                        <td class="px-4 py-2">
+                            <span
+                                class="inline-block rounded-full px-3 py-1 text-xs font-semibold text-white"
+                                :class="{
+                                    'bg-red-500': trx.type === 'debit',
+                                    'bg-green-500': trx.type === 'credit',
+                                    'bg-yellow-500 text-black': trx.type === 'refund',
+                                }"
+                            >
+                                {{ trx.type.charAt(0).toUpperCase() + trx.type.slice(1) }}
+                            </span>
+                        </td>
+
                         <td class="px-4 py-2 break-all">{{ trx.payment_id ?? '-' }}</td>
                         <td class="px-4 py-2 break-all">{{ trx.trx_id ?? '-' }}</td>
                         <td class="px-4 py-2 capitalize">{{ trx.status }}</td>
                         <td class="px-4 py-2">{{ new Date(trx.created_at).toLocaleString() }}</td>
-                        <td class="px-4 py-2">Refund</td>
+                        <td class="px-4 py-2 whitespace-nowrap">
+                            <a
+                                :href="`/request-to-refund-balance/${trx.trx_id}/${trx.payment_id}`"
+                                class="mr-2 inline-block rounded-md bg-yellow-500 px-3 py-1 text-sm font-medium text-white hover:bg-red-600"
+                            >
+                                Refund
+                            </a>
+                            <a
+                                :href="`/statement-pdf/${trx.wallet_trx_id}`"
+                                class="inline-block rounded-md bg-black px-3 py-1 text-sm font-medium text-white hover:bg-blue-600"
+                            >
+                                Download Statement
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
