@@ -10,7 +10,7 @@ class pdfTestController extends Controller
 {
     public function testPdf()
     {
-        $html = view('pdf.test‑invoice')->render();
+        $html = view('pdf.testinvoice')->render();
 
         $request = Gotenberg::chromium('http://127.0.0.1:8088')
             ->pdf()
@@ -23,7 +23,7 @@ class pdfTestController extends Controller
             200,
             [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="test‑invoice.pdf"',
+                'Content-Disposition' => 'inline; filename="testinvoice.pdf"',
             ]
         );
     }
