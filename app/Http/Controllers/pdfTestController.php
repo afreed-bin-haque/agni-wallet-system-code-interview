@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Response;
 use Gotenberg\Gotenberg;
 use Gotenberg\Stream;
+use Gotenberg\Modules\ChromiumPdf;
 use Illuminate\Http\Request;
 
 class pdfTestController extends Controller
@@ -13,13 +14,13 @@ class pdfTestController extends Controller
     {
         $html = view('pdf.test-invoice')->render();
 
+        $request = ChromiumPdf::make()
+            ->html(Stream::string('index.html', $html));
 
-        $gotenberg = Gotenberg::chromium('http://127.0.0.1:8088');
-
-        $response = $gotenberg
-            ->html(Stream::string('invoice.html', $html))
-            ->pdf()
-            ->request();
+        $response = Gotenberg::send(
+            $request,
+            'http://127.0.0.1:8088'
+        );
 
         return new Response(
             $response->getBody()->getContents(),
