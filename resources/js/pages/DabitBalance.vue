@@ -27,7 +27,7 @@ const handleSubmit = (e: Event) => {
         <div class="flex min-h-screen items-center justify-center px-4">
             <div class="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
                 <h1 class="mb-2 text-center text-2xl font-semibold text-gray-900">
-                    {{ __('Balance Add') }}
+                    {{ __('Debit') }}
                 </h1>
 
                 <form class="space-y-5" method="POST" action="/request-to-add-balance" @submit.prevent="handleSubmit">
@@ -62,7 +62,7 @@ const handleSubmit = (e: Event) => {
                         :disabled="!canSubmit || submitting"
                         class="w-full rounded-md bg-[#04a96d] py-2 text-white hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        Add Balance
+                        Debit Balance
                     </button>
                 </form>
             </div>

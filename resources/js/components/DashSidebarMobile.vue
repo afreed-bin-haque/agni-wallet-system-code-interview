@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { Clock, CreditCard, Menu, X } from 'lucide-vue-next';
+import { Clock, CreditCard, HandCoins, LayoutDashboard, Menu, X } from 'lucide-vue-next';
 import { ref } from 'vue';
 
 const isOpen = ref(false);
@@ -26,9 +26,17 @@ function toggleSidebar() {
         ]"
     >
         <nav class="mt-8 flex flex-col space-y-4">
+            <Link href="/dashboard" class="flex items-center gap-2 hover:text-green-700">
+                <LayoutDashboard class="h-5 w-5" />
+                {{ __('Dashboard') }}
+            </Link>
             <Link href="/add-balance" class="flex items-center gap-2 hover:text-green-700">
                 <CreditCard class="h-5 w-5" />
                 {{ __('AddBalance') }}
+            </Link>
+            <Link href="/debit-balance" class="flex cursor-pointer items-center gap-2 hover:text-green-700">
+                <HandCoins class="h-5 w-5" />
+                {{ __('Debit') }}
             </Link>
             <Link href="/history" class="flex items-center gap-2 hover:text-green-700">
                 <Clock class="h-5 w-5" />

@@ -1,8 +1,10 @@
 {
     "AgniWallet": "Agni Wallet",
     "Wallet": "ওয়ালেট",
+    "Dashboard": "ড্যাশবোর্ড",
     "AddBalance": "ব্যালেন্স যোগ করুন",
-    "History": "হিস্টরি",
+    "History": "হিস্টরি এবং স্টেটমেন্ট",
+    "SuccessfullTransactionHistoryStatement": "সফল ট্রান্সেকশন এবং স্টেমেন্ট পিডিএফ",
     "Login": "লগ ইন",
     "Register": "রেজিস্টার",
     "Logout": "লগ আউট",
@@ -18,5 +20,9 @@
     "Balance": "ব্যালেন্স",
     "balaneAdd": "ব্যালেন্স যোগ করুন",
     "phonNumberHolder": "আপনার বিকাশ ফোন নাম্বার লিখুন",
-    "addAmount": "টাকার পরিমাণ লিখুন"
+    "addAmount": "টাকার পরিমাণ লিখুন",
+    "currentBalance": "বর্তমান ব্যালেন্স",
+    "transactionHeader": "ট্রান্সেকশন হিস্টরি",
+    "transactionHeaderHelper": "এখানে আপনার সকল ফেইল্ড বা সাকসেসফুল ট্রান্সেকশন ডাটা আছে",
+    "Debit": "ডেবিট"
 }

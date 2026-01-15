@@ -1,8 +1,10 @@
 {
     "AgniWallet": "Agni Wallet",
+    "Dashboard": "Dashboard",
     "Wallet": "Wallet",
     "AddBalance": "Add Balance",
-    "History": "History",
+    "History": "History & Statement",
+    "SuccessfullTransactionHistoryStatement": "Successful transaction statement pdf",
     "Login": "Login",
     "Register": "Register",
     "Logout": "Logout",
@@ -18,5 +20,9 @@
     "Balance": "Balance",
     "balaneAdd": "Add Balance",
     "phonNumberHolder": "Write your Bkash phone number",
-    "addAmount": "Write an amount you want to add to wallet"
+    "addAmount": "Write an amount you want to add to wallet",
+    "currentBalance": "Current Balance",
+    "transactionHeader": "Transaction History",
+    "transactionHeaderHelper": "This is the table of transaction of both failed and successful balance add attepmt",
+    "Debit": "Debit"
 }

@@ -12,8 +12,12 @@ Route::get('/language', [appManager::class, "changeLang"])->name('languageswitch
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [userDashController::class, "dashboard"])->name('dashboard');
     Route::get('/history', [userDashController::class, "userTrxHistory"])->name('history');
+    Route::get('/get-transaction-table', [userDashController::class, "transacctionTable"])->name('trxhistorytable');
+    Route::get('/get-success-transaction-table', [userDashController::class, "successTransactionTable"])->name('successfultrxhistorytable');
     Route::get('/add-balance', [userDashController::class, "addBalance"])->name('addbalance');
     Route::post('/request-to-add-balance', [userDashController::class, "requstAddBalance"])->name('reqaddbalance');
+    Route::get('/debit-balance', [userDashController::class, "dbitBalance"])->name('debitbalance');
+    Route::post('/request-to-debit-balance', [userDashController::class, "requstDebitBalance"])->name('reqdebitbalance');
     Route::get('/logout', [userAuthController::class, "userLogout"])->name('userlogout');
 });
 

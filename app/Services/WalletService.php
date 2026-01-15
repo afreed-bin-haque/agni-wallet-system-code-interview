@@ -9,9 +9,11 @@ class WalletService
 {
     public function getUserBalance()
     {
-        $userId = Auth::id();
-        $wallet = Wallet::where('user_id', $userId)->first();
-        return $wallet?->balance ?? 0;
+        $userId = $userId ?? Auth::id();
+        return Wallet::firstOrCreate(
+            ['user_id' => $userId],
+            ['balance' => 0]
+        );
     }
 
     public function addBalance($amount, $userId = null)

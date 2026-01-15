@@ -6,6 +6,7 @@ use App\Models\TrxChannel;
 use App\Models\Wallet;
 use App\Models\WalletTransaction;
 use App\Services\WalletService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class userDashController extends Controller
@@ -47,8 +49,11 @@ class userDashController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
+        $balance = $this->walletService->getUserBalance();
+
         return Inertia::render("Dashboard", [
-            'user' => $user ? $user->only(['id', 'name', 'email']) : null
+            'user' => $user ? $user->only(['id', 'name', 'email']) : null,
+            'wallet' => $balance
         ]);
     }
 
@@ -64,6 +69,133 @@ class userDashController extends Controller
             'wallet' => $balance
         ]);
     }
+    public function dbitBalance()
+    {
+        $balance = $this->walletService->getUserBalance();
+
+        return Inertia::render('DabitBalance', [
+            'wallet' => $balance
+        ]);
+    }
+
+    public function transacctionTable(Request $request)
+    {
+        try {
+            $userId = Auth::id();
+            $search = $request->get('search');
+
+            $query = TrxChannel::query();
+            $query->where('user_id', $userId);
+
+            if ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('payer_account_number', 'like', "%{$search}%")
+                        ->orWhere('payment_id', 'like', "%{$search}%")
+                        ->orWhere('trx_id', 'like', "%{$search}%");
+                });
+            }
+
+            $results = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
+
+            $results->getCollection()->transform(function ($item) {
+                $item->bkash_res = $item->bkash_res ? json_decode($item->bkash_res, true) : null;
+                return $item;
+            });
+            return response()->json([
+                "status" => true,
+                "msg" => "Data served",
+                "result" => $results
+            ], 200);
+        } catch (Exception $e) {
+            $errorDetails = "[Transaction table] error " . $e->getMessage() . " at line: " . $e->getLine();
+            Log::error($errorDetails);
+            abort(400, 'Request could not process.Please check log');
+        }
+    }
+
+    public function successTransactionTable(Request $request)
+    {
+        try {
+            $userId = Auth::id();
+            $search = $request->get('search');
+
+            $wallet = Wallet::where('user_id', $userId)->first();
+
+            if (!$wallet) {
+                return response()->json([
+                    "status" => false,
+                    "msg" => "Wallet not found",
+                    "result" => []
+                ], 404);
+            }
+
+            $query = $wallet->walletTrx()->where('status', 'success');
+
+            if ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('trx_id', $search)
+                        ->orWhere('phone', 'like', "%{$search}%")
+                        ->orWhere('payment_id', 'like', "%{$search}%");
+                });
+            }
+
+            $transactions = $query->orderByDesc('created_at')->paginate(10)->withQueryString();
+
+            $transactions->getCollection()->transform(function ($item) {
+                $item->bkash_res = $item->bkash_res ? json_decode($item->bkash_res, true) : null;
+                $item->created_at = Carbon::parse($item->created_at)->tz('Asia/Dhaka')->toDateTimeString();
+                return $item;
+            });
+
+            return response()->json([
+                "status" => true,
+                "msg" => "Data served",
+                "result" => $transactions
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error("[Successfull transaction table] error " . $e->getMessage() . " at line: " . $e->getLine());
+            abort(400, 'Request could not process. Please check log');
+        }
+    }
+
+    public function requstDebitBalance(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'phone' => 'required',
+                'amount' => 'required|int',
+                'password' => 'required|min:6',
+            ]);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'msg' => $validator->errors()->first()
+                ], 200);
+            }
+            $amount = (int) $request->amount;
+            $userId = Auth::id();
+            $wallet = $this->walletService->addBalance(-$amount, $userId);
+
+
+            WalletTransaction::create([
+                'wallet_id' => $wallet->wallet_id,
+                'type' => 'debit',
+                'amount' => (int) $request->amount,
+                'phone' => $request->phone,
+
+                'status' => 'success',
+            ]);
+            return response()->json([
+                "status" => true,
+                "msg" => "User registered"
+            ], 200);
+        } catch (Exception $e) {
+            $errorDetails = "[Debit balance] error " . $e->getMessage() . " at line: " . $e->getLine();
+            Log::error($errorDetails);
+            abort(400, 'Request could not process.Please check log');
+        }
+    }
+
 
     public function requstAddBalance(Request $request)
     {
@@ -73,7 +205,6 @@ class userDashController extends Controller
         session()->forget('authorization');
         $id_key = "bkash_id_key";
         $refresh_key = "bkash_refresh_key";
-        /*       $user = Auth::user();*/
 
 
 
@@ -82,7 +213,7 @@ class userDashController extends Controller
             ? substr($getPhone, 3)
             : $getPhone;
 
-        $userId = 1;
+        $userId =  Auth::id();
         $trxId  = Str::uuid();
         $assignAmount = $request->amount;
         if (Redis::exists($id_key) && Redis::exists($refresh_key)) {
