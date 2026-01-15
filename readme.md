@@ -5,6 +5,7 @@ this this a document about how to run the project
 copy from .interview.env and paste it into .env
 
 To run the project :
+copy item from .interview.env
 
 ```
 composer install
