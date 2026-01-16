@@ -264,7 +264,7 @@ class userDashController extends Controller
             'bkash_res' => json_encode($jsonDecodedGetChecoutUrl),
         ]);
         Session::put([
-            'paymet_id' => $jsonDecodedGetChecoutUrl['paymentID'],
+            'paymet_id' => $jsonDecodedGetChecoutUrl['paymentID'] ?? null,
             'trxId' => $trxId,
             'phone' => $getPhone,
             'authorization' => $id_token,
